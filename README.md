@@ -8,7 +8,7 @@ The application is supposed to run as a maven project inside a graal vm minimal 
 2. Any IDE
 3. Maven
 4. Docker
-5. Graal VM
+5. Graal VM *(1.6)*
 6. Any kubernetes environment (I have used k3s.io)
 
 To create the scaffolding
@@ -32,6 +32,12 @@ Run as standalone docker mode
 ```./mvnw compile quarkus:dev```
 * To run postgresql as a docker image
 ```docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -d -p 5432:5432 postgres:9.4 ```
+* To build a native binary
+```
+mvn clean install -DskipTests -DskipITs
+./mvnw package -Pnative
+```
+
 
 
 
