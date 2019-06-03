@@ -131,7 +131,7 @@ input {
 <div id="myDIV" class="header">
   <h2 style="margin:5px">My To Do List</h2>
   <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
+  <span onclick="addNewTask()" class="addBtn">Add</span>
 </div>
 
 <ul id="myUL">
@@ -149,7 +149,7 @@ input {
 //data fetching
 todoList = null;
 
-$.getJSON('http://35.244.47.55:8080/todos', function(data) {
+$.getJSON('/todos', function(data) {
   console.log("data:" + data);
   $.each(data, function(key, val) {
     task = val.task;
@@ -159,34 +159,46 @@ $.getJSON('http://35.244.47.55:8080/todos', function(data) {
     newElement(task,id,complete);
   });
 });
-// Create a "close" button and append it to each list item
-/*
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
 
 
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
+function addNewTask(){
+  todo = {"complete":false,"task":""}
+  todo.task = document.getElementById("myInput").value;
+  id = -1;
+  jQuery.ajax ({
+    url: "/todos",
+    type: "POST",
+    data: JSON.stringify(todo),
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    success: function(data){
+      newElement(todo.task, data.id, todo.complete);
+      document.getElementById("myInput").value = "";
+    }
+  });
 }
-*/
+
 // Add a "checked" symbol when clicking on a list item
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
+    id = ev.target.id;
+    url="/todos/"+id;
+    task = ev.target.innerHTML.split("<span")[0];
+    complete = false;
+    if (ev.target.className != "checked") {
+      complete = true;
+    }
+    jQuery.ajax ({
+      url: url,
+      type: "PUT",
+      data: JSON.stringify({"task":task, "id": id, "complete": complete }),
+      dataType: "json",
+      contentType: "application/json; charset=utf-8",
+      success: function(data){
+        ev.target.classList.toggle('checked');
+      }
+    });
   }
 }, false);
 
@@ -202,7 +214,6 @@ function newElement(inputValue,id, completeTask) {
   } else {
     document.getElementById("myUL").appendChild(li);
   }
-  document.getElementById("myInput").value = "";
 
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
@@ -215,10 +226,20 @@ function newElement(inputValue,id, completeTask) {
   span.appendChild(txt);
   li.appendChild(span);
 
+  var close = document.getElementsByClassName("close");
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
       var div = this.parentElement;
-      div.style.display = "none";
+      id = div.id;
+      url="/todos/"+id;
+      jQuery.ajax ({
+        url: url,
+        type: "DELETE",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+          div.style.display = "none";
+        }
+      });
     }
   }
 }

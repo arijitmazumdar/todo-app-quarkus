@@ -78,9 +78,9 @@ public class ToDoService {
         if (entity == null) {
             throw new WebApplicationException("ToDo with id of " + id + " does not exist.", 404);
         }
- 
         entity.task = todo.task;
- 
+        entity.complete = todo.complete;
+        entity.persist();
         return entity;
     }
  
@@ -98,7 +98,6 @@ public class ToDoService {
  
     @Provider
     public static class ErrorMapper implements ExceptionMapper<Exception> {
- 
         @Override
         public Response toResponse(Exception exception) {
             int code = 500;
@@ -109,6 +108,5 @@ public class ToDoService {
                     .entity(Json.createObjectBuilder().add("error", exception.getMessage()).add("code", code).build())
                     .build();
         }
- 
     }
 }
