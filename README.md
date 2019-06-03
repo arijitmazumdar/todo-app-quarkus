@@ -8,7 +8,7 @@ The application is supposed to run as a maven project inside a graal vm minimal 
 2. Any IDE
 3. Maven
 4. Docker
-5. Graal VM *(1.6)*
+5. Graal VM **(1.6)**
 6. Any kubernetes environment (I have used k3s.io)
 
 To create the scaffolding
