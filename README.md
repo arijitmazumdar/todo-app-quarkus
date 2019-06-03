@@ -24,13 +24,14 @@ mvn io.quarkus:quarkus-maven-plugin:0.13.1:create \
 ```
 Run as standalone docker mode
 =============================
-One can compile the code using 
-`./mvnw compile`
-Test
-`./mvnw test`
-Run in the development mode
-`./mvnw compile quarkus:dev`
-To run postgresql as a docker image
-`docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -d -p 5432:5432 postgres:9.4 `
+* One can compile the code using 
+```./mvnw compile```
+* Test
+```./mvnw test```
+* Run in the development mode
+```./mvnw compile quarkus:dev```
+* To run postgresql as a docker image
+```docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -d -p 5432:5432 postgres:9.4 ```
+
 
 
