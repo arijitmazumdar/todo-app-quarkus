@@ -37,6 +37,12 @@ Run as standalone docker mode
 mvn clean install -DskipTests -DskipITs
 ./mvnw package -Pnative
 ```
+* To build docker image
+```
+./mvnw package -Pnative -Dnative-image.container-runtime=docker
+docker build -f src/main/docker/Dockerfile.native -t arijitmazumdar/todo-app-quarkus .
+```
+* To run docker image along 
 
 
 
