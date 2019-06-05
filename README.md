@@ -41,7 +41,7 @@ Run the project as standalone docker mode
 =========================================
 * To build a native binary
 ```
-./mvnw package -Pnative
+./mvnw package -Pnative # mvn clean install -DskipTests -DskipITs -- if you face Jandex Indexing problem
 ```
 * To build docker image use the following command. I have pushed the image into my docker repo, please change appropriately
 ```
