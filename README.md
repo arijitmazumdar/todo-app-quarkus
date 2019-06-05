@@ -38,7 +38,6 @@ Run the project as standalone docker mode
 =========================================
 * To build a native binary
 ```
-mvn clean install -DskipTests -DskipITs
 ./mvnw package -Pnative
 ```
 * To build docker image use the following command. I have pushed the image into my docker repo, please change appropriately
@@ -46,10 +45,12 @@ mvn clean install -DskipTests -DskipITs
 ./mvnw package -Pnative -Dnative-image.container-runtime=docker
 docker build -f src/main/docker/Dockerfile.native -t arijitmazumdar/todo-app-quarkus .
 ```
-* To run everything together, I have ran postgre docker and application docker in the same docker network. And then send the new DB URL as environment variable to the app docker. The script is located under `src/scripts` directory. Running the script is super easy as mentioned below. **If the script breaks in between one need to delete docker resources manually. The script will break if ran after successfully.**
+* To run everything together, I have ran postgre docker and application docker in the same docker network. And then send the new DB URL as environment variable to the app docker. The script is located under `src/scripts` directory. Running the script is super easy as mentioned below. **If docker network already available it won't create but docker containers will be re-created**
 ```
 bash -x ./src/scripts/deployDocker.sh
 ```
+
+My experiences and learnings to build this can be found here.
 
 
 
