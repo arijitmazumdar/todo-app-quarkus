@@ -5,6 +5,10 @@ DB=postgres
 NETWORK=todo-app-network
 BACKEND=backend
 FRONTEND=frontend
+FRONTEND_IMAGE=arijitmazumdar/todo-app-quarkus-dl
+
+#values will be overwritten 
+source ./deployment.env
 
 test `docker network ls --filter "name=todo-app-network" --format {{.ID}} | wc -l` -eq 0 && docker network create ${NETWORK}
 
@@ -37,6 +41,7 @@ fi
 docker run --name ${FRONTEND} --network  ${NETWORK} -e QUARKUS_DATASOURCE_URL=${url} \
 -e QUARKUS_DATASOURCE_USERNAME=${USERNAME} \
 -e QUARKUS_DATASOURCE_PASSWORD=${PASSWORD} \
--d -p8080:8080 arijitmazumdar/todo-app-quarkus
+-d -p8080:8080 ${FRONTEND_IMAGE}
 
+echo "sleeping for 2 sec for frontend to warmup" && sleep 2
 echo "curl http://localhost:8080/todos" && curl "http://localhost:8080/todos"
