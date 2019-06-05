@@ -28,12 +28,4 @@ public class ToDoServiceTest {
              .body(containsString("42") );
     }
 
-    @Test
-    public void testToDoCompleteEndpoint() {
-        given()
-          .parameters("task","sometask","complete", true).post("/todos")
-          .then()
-             .statusCode(200)
-             .body(containsString("sometask") );
-    }
 }
