@@ -22,6 +22,7 @@ mvn io.quarkus:quarkus-maven-plugin:0.13.1:create \
      -Dpath="/todos" \
      -Dextensions="quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-resteasy-jsonb"
 ```
+
 Working on the development cycle
 =============================
 * Run postgresql as a docker image
