@@ -1,14 +1,16 @@
 # todo-app-quarkus
-To build a a simple UI based app using Quarkus, JQuery and Postgresql
+This is a small project to build a simple browser based app using Quarkus, JQuery and Postgresql. If you are able to run application, the application can be accessed at http://localhost:8080/.  The UI component are located in `src/main/resources/META-INF/`. The focus was more on Quarkus side, others were complementary. The reason I was interested to build is to experience Quarkus and Graal VM specifically. I was anxious to check the native image has really made booting faster and I must agree that I am not disappointed. But the ride was not entirely smooth, mostly of my lack of knowledge (No doubt on that) and technology is yet to mature. Stackoverflow is not overflowing with information!! I have documented and shared my learning in another blog, can be found here.
+Things definitely can be written better way. Do let know if you think things could have done. Mostly this is for the beginners and lazy developers (like me) to give quick start. 
+
 
 Pre-requisite
 =============
 The application is supposed to run as a maven project inside a graal vm minimal docker with access to postgresql, which has been assumed to be running as a docker as well.
-1. Java 1.8+ installed
+1. Java 1.8+ installed and JAVA_HOME is set propoerly.
 2. Any IDE
 3. Maven
 4. Docker
-5. Graal VM **(1.6)**
+5. Graal VM **(Community Edition 1.0 RC16)** instaled and configured 
 6. Any kubernetes environment (I have used k3s.io)
 
 To create the scaffolding
@@ -31,7 +33,7 @@ Working on the development cycle
 ```./mvnw compile```
 * Test
 ```./mvnw test```
-* Run the application in development mode using
+* Run the application in development mode using.
 ```./mvnw compile quarkus:dev```
 
 Run the project as standalone docker mode
@@ -44,14 +46,13 @@ Run the project as standalone docker mode
 ```
 ./mvnw package -Pnative -Dnative-image.container-runtime=docker
 docker build -f src/main/docker/Dockerfile.native -t arijitmazumdar/todo-app-quarkus .
+docker build -f src/main/docker/Dockerfile.native.distroless -t arijitmazumdar/todo-app-quarkus . #to build a distroless docker
 ```
 * To run everything together, I have ran postgre docker and application docker in the same docker network. And then send the new DB URL as environment variable to the app docker. The script is located under `src/scripts` directory. Running the script is super easy as mentioned below. **If docker network already available it won't create but docker containers will be re-created**
 ```
-bash -x ./src/scripts/deployDocker.sh
+bash ./src/scripts/deployDocker.sh #Change the docker image name in the file src/scripts/deployment.env
 ```
 
-My experiences and learnings to build this can be found here.
-
-
+Things yet to be complete is to deploy into a kubernetes, which will be made shortly available.
 
 
