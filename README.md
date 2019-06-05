@@ -54,6 +54,6 @@ docker build -f src/main/docker/Dockerfile.native.distroless -t arijitmazumdar/t
 bash ./src/scripts/deployDocker.sh #Change the docker image name in the file src/scripts/deployment.env
 ```
 
-Things yet to be complete is to deploy into a kubernetes, which will be made shortly available.
+Things yet to be complete is to deploy into a kubernetes, which will be made available shortly.
 
 
