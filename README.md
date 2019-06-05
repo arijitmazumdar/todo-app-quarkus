@@ -22,27 +22,32 @@ mvn io.quarkus:quarkus-maven-plugin:0.13.1:create \
      -Dpath="/todos" \
      -Dextensions="quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-resteasy-jsonb"
 ```
-Run as standalone docker mode
+Working on the development cycle
 =============================
-* One can compile the code using 
+* Run postgresql as a docker image
+```docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -d -p 5432:5432 postgres:9.4 ```
+* Compile the code using 
 ```./mvnw compile```
 * Test
 ```./mvnw test```
 * Run in the development mode
 ```./mvnw compile quarkus:dev```
-* To run postgresql as a docker image
-```docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -d -p 5432:5432 postgres:9.4 ```
+Run the project as standalone docker mode
+=========================================
 * To build a native binary
 ```
 mvn clean install -DskipTests -DskipITs
 ./mvnw package -Pnative
 ```
-* To build docker image
+* To build docker image use the following command. I have pushed the image into my docker repo, please change appropriately
 ```
 ./mvnw package -Pnative -Dnative-image.container-runtime=docker
 docker build -f src/main/docker/Dockerfile.native -t arijitmazumdar/todo-app-quarkus .
 ```
-* To run docker image along 
+* To run everything together, I have ran postgre docker and application docker in the same docker network. And then send the new DB URL as environment variable to the app docker. The script is located under `src/scripts` directory. Running the script is super easy as mentioned below. **If the script breaks in between one need to delete docker resources manually. The script will break if ran after successfully.**
+```
+bash -x ./src/scripts/deployDocker.sh
+```
 
 
 
