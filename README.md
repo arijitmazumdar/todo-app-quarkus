@@ -31,8 +31,9 @@ Working on the development cycle
 ```./mvnw compile```
 * Test
 ```./mvnw test```
-* Run in the development mode
+* Run the application in development mode using
 ```./mvnw compile quarkus:dev```
+
 Run the project as standalone docker mode
 =========================================
 * To build a native binary
