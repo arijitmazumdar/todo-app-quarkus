@@ -59,7 +59,10 @@ docker build -f src/main/docker/Dockerfile.native.distroless -t arijitmazumdar/t
 bash ./src/scripts/deployDocker.sh #Change the docker image name in the file src/scripts/deployment.env
 ```
 
-* Deploying to Kubernetes is also not very difficult. First we need to add kubernetes plugin using following command
+Deploying into Kubernetes (K3s.io)
+==================================
+
+Deploying to Kubernetes is also not very difficult. First we need to add kubernetes plugin using following command
 ```
 
 mvn quarkus:add-extension -Dextensions="io.quarkus:quarkus-kubernetes" 
