@@ -29,7 +29,12 @@ mvn io.quarkus:quarkus-maven-plugin:0.13.1:create \
 Working on the development cycle
 =============================
 * Run postgresql as a docker image
-```docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -d -p 5432:5432 postgres:9.4 ```
+```
+docker run -e POSTGRES_PASSWORD=postgres\
+-e POSTGRES_DB=postgres\
+-e POSTGRES_USER=postgres\
+-d -p 5432:5432 postgres:9.4 
+```
 * Compile the code using 
 ```./mvnw compile```
 * Test
