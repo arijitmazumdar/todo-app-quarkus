@@ -54,6 +54,13 @@ docker build -f src/main/docker/Dockerfile.native.distroless -t arijitmazumdar/t
 bash ./src/scripts/deployDocker.sh #Change the docker image name in the file src/scripts/deployment.env
 ```
 
-Things yet to be complete is to deploy into a kubernetes, which will be made available shortly.
+* Deploying to Kubernetes is also not very difficult. First we need to add kubernetes plugin using following command
+```
 
+mvn quarkus:add-extension -Dextensions="io.quarkus:quarkus-kubernetes" 
+```
+Then we need to update application.properties (section is already present in the repository) to set repository name and version, package the application using `mvn package` and build it again as mentioned previous steps. This will generate the deployment descriptor that we want. However this is not complete yet. The generator creates deployment for todo-app only but not for the postgre. To solve this we will take a simple approach where both todo-app and postgre docker can be deployed in the same pod to minimize the change in the configurations. Also we need to expose it outside the cluster, hence change the spec.type to LoadBalancer. Copy of the file is kept at root directory. However one generate following the process mentioned above. Finally you can deploy it into the cluster using
+```
+kubectl apply -f target/wiring-classes/META-INF/kubernetes/kubernetes.yml
+```
 
