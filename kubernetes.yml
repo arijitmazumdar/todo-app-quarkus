@@ -1,0 +1,71 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    labels:
+      app: "todo-app-quarkus"
+      version: "latest"
+      group: "arijitmazumdar"
+    name: "todo-app-quarkus"
+  spec:
+    ports:
+    - name: "http"
+      port: 8080
+      targetPort: 8080
+    selector:
+      app: "todo-app-quarkus"
+      version: "latest"
+      group: "arijitmazumdar"
+    type: "LoadBalancer"
+- apiVersion: "apps/v1"
+  kind: "Deployment"
+  metadata:
+    labels:
+      app: "todo-app-quarkus"
+      version: "latest"
+      group: "arijitmazumdar"
+    name: "todo-app-quarkus"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: "todo-app-quarkus"
+        version: "latest"
+        group: "arijitmazumdar"
+    template:
+      metadata:
+        labels:
+          app: "todo-app-quarkus"
+          version: "latest"
+          group: "arijitmazumdar"
+      spec:
+        containers:
+        - env:
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "arijitmazumdar/todo-app-quarkus:latest"
+          imagePullPolicy: "IfNotPresent"
+          name: "todo-app-quarkus"
+          ports:
+          - containerPort: 8080
+            name: "http"
+            protocol: "TCP"
+        - env:
+          - name: "POSTGRES_DB"
+            value: "postgres"
+          - name: "POSTGRES_USER"
+            value: "postgres"
+          - name: "POSTGRES_PASSWORD"
+            value: "postgres"
+          image: "postgres:9.4"
+          imagePullPolicy: "IfNotPresent"
+          name: "todo-app-db"
+          ports:
+          - containerPort: 5432
+            name: "http"
+            protocol: "TCP"
