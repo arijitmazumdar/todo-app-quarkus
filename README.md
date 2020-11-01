@@ -1,4 +1,4 @@
-# Building To-Do ap using Quarkus
+# Building To-Do app using Quarkus
 This is a small project to build a simple browser based app using Quarkus, JQuery and Postgresql. If you are able to run application, the application can be accessed at http://localhost:8080/.  The UI component are located in `src/main/resources/META-INF/`. The focus was more on Quarkus side, others were complementary. I was interested to get an experience on Quarkus and Graal VM. I was anxious to check the native image has really made booting faster and I must agree that I am not disappointed. But the ride was not entirely smooth, mostly of my lack of knowledge (No doubt on that) and technology is yet to mature. Stackoverflow is not overflowing with information!! I have documented and shared my learning in another blog, can be found here.
 
 Things definitely could have been written better way. Do let know if you think things could have done. Mostly this is for the beginners and lazy developers (like me) to give a quick start on the subject. 
